@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#ffffff" />
 <title>Swift Pay Bulk — Collo Data Solutions</title>
 <link rel="stylesheet" href="styles.css" />
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -17,10 +18,9 @@
         <span class="logo-text">SWIFT PAY BULK</span>
       </div>
       <nav class="nav-links">
-        <a href="#" class="active">Home</a>
-        <a href="https://wa.me/254790017641?text=Hello%20COLLO%20DATA%20SOLUTIONS%3F" target="_blank" rel="noopener">About Us</a>
-        <a href="https://wa.me/254790017641?text=Hello%20COLLO%20DATA%20SOLUTIONS%3F" target="_blank" rel="noopener">How it Works</a>
-        <a href="https://wa.me/254790017641?text=Hello%20COLLO%20DATA%20SOLUTIONS%3F" target="_blank" rel="noopener">FAQs</a>
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="faqs.html">FAQs</a>
         <a href="https://wa.me/254790017641?text=Hello%20COLLO%20DATA%20SOLUTIONS%3F" target="_blank" rel="noopener">Contact Us</a>
       </nav>
     </div>
@@ -64,15 +64,11 @@
 
       <label class="checkbox-row">
         <input type="checkbox" id="terms" required />
-        <span>I agree to the <a href="#">terms and conditions</a></span>
+        <span>I agree to the <a href="terms.html">terms and conditions</a></span>
       </label>
 
-      <div class="recaptcha-box">
-        <label class="checkbox-row">
-          <input type="checkbox" id="notRobot" required />
-          <span>I'm not a robot</span>
-        </label>
-        <div class="recaptcha-badge">reCAPTCHA<br /><small>Privacy · Terms</small></div>
+      <div class="recaptcha-wrap">
+        <div class="g-recaptcha" data-sitekey="6LcceZQtAAAAAHc6a2n5XBm99tX0DucyC7WMqlWU"></div>
       </div>
 
       <div id="form-message" class="form-message"></div>
