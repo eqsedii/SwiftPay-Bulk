@@ -5,6 +5,7 @@ const { AT_USERNAME, AT_API_KEY } = process.env;
 
 const at = AfricasTalking({ apiKey: AT_API_KEY, username: AT_USERNAME });
 const airtime = at.AIRTIME;
+const application = at.APPLICATION;
 
 async function sendAirtime({ recipientPhone, amountKes }) {
   const phoneNumber = '+' + normalizeMsisdn(recipientPhone);
@@ -18,4 +19,11 @@ async function sendAirtime({ recipientPhone, amountKes }) {
   return result;
 }
 
-module.exports = { sendAirtime };
+async function getFloatBalance() {
+  const data = await application.fetchApplicationData();
+  const raw = data?.UserData?.balance || '';
+  const numeric = Number(String(raw).replace(/[^0-9.-]/g, ''));
+  return { raw, amount: Number.isFinite(numeric) ? numeric : null };
+}
+
+module.exports = { sendAirtime, getFloatBalance };
