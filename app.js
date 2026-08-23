@@ -23,12 +23,16 @@ form.addEventListener('submit', (e) => {
     messageEl.textContent = 'Please agree to the terms and conditions.';
     return;
   }
-  if (!document.getElementById('notRobot').checked) {
-    messageEl.textContent = 'Please confirm you are not a robot.';
+
+  const captchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+  if (!captchaResponse) {
+    messageEl.textContent = 'Please complete the "I\'m not a robot" check.';
     return;
   }
 
   // Payment isn't wired up yet — this is just a placeholder for now.
   messageEl.style.color = '#1a8c3f';
   messageEl.textContent = 'Payments are coming soon — this form is not live yet.';
+
+  if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
 });
