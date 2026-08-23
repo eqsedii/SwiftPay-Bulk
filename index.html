@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content="light only" />
 <meta name="theme-color" content="#ffffff" />
-<title>Swift Pay Bulk — Collo Data Solutions</title>
+<title>Swift Pay Bulk Airtime</title>
 <link rel="stylesheet" href="styles.css" />
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
@@ -15,7 +15,7 @@
     <div class="nav-inner">
       <div class="logo">
         <span class="logo-mark">S</span>
-        <span class="logo-text">SWIFT PAY BULK</span>
+        <span class="logo-text">SWIFT PAY BULK AIRTIME</span>
       </div>
       <nav class="nav-links">
         <a href="index.html" class="active">Home</a>
@@ -39,6 +39,7 @@
 
   <main class="form-card">
     <h1>Buy Airtime Now</h1>
+    <p class="promo-line">Enjoy a discount of up to 15% on every airtime purchase.</p>
 
     <form id="airtime-form">
       <label for="payerPhone">Mpesa Number</label>
@@ -68,7 +69,7 @@
       </label>
 
       <div class="recaptcha-wrap">
-        <div class="g-recaptcha" data-sitekey="6LcceZQtAAAAAHc6a2n5XBm99tX0DucyC7WMqlWU"></div>
+        <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE"></div>
       </div>
 
       <div id="form-message" class="form-message"></div>
@@ -80,11 +81,20 @@
   <footer class="footer">
     <div class="footer-left">🛡️ Always here for you</div>
     <div class="footer-right">
-      <div class="footer-brand">SWIFT PAY BULK</div>
+      <div class="footer-brand">SWIFT PAY BULK AIRTIME</div>
       <div class="footer-tag">Fast • Easy • Reliable</div>
     </div>
   </footer>
 
+  <div id="status-modal" class="modal hidden">
+    <div class="modal-card">
+      <div id="modal-spinner" class="spinner"></div>
+      <h3 id="modal-title">Check your phone</h3>
+      <p id="modal-text">Enter your M-Pesa PIN to complete payment.</p>
+      <button id="modal-close" class="modal-close hidden">Close</button>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
-</html>
+  </html>
