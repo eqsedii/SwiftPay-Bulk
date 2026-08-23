@@ -1,19 +1,21 @@
 {
-  "name": "swiftpay-bulk",
-  "version": "1.0.0",
-  "description": "SwiftPay Bulk / Collo Data Solutions - M-Pesa STK Push + Africa's Talking airtime top-up",
+  "name": "swiftpay-bulk-airtime",
+  "version": "1.1.0",
+  "description": "Swift Pay Bulk Airtime - M-Pesa STK Push + Africa's Talking airtime top-up, with admin dashboard",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "migrate": "psql \"$DATABASE_URL\" -f server/migrations/schema.sql"
+    "migrate": "psql \"$DATABASE_URL\" -f server/migrations/schema.sql && psql \"$DATABASE_URL\" -f server/migrations/settings.sql"
   },
   "dependencies": {
     "africastalking": "^0.7.0",
     "axios": "^1.7.7",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-rate-limit": "^7.4.0",
     "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.0"
   },
   "engines": { "node": ">=18" }
