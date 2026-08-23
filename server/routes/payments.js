@@ -1,13 +1,47 @@
 const express = require('express');
 const { pool } = require('../db');
 const { initiateStkPush } = require('../services/mpesa');
+const { getFloatBalance } = require('../services/airtime');
+const { getSettings } = require('../services/settings');
 const { priceForFaceValue } = require('./offers');
 
 const router = express.Router();
 
 const PHONE_RE = /^(?:254|0)?7\d{8}$|^(?:254|0)?1\d{8}$/;
 
+let floatCache = { amount: null, checkedAt: 0 };
+const FLOAT_CACHE_MS = 30000;
+
+async function cachedFloatAmount() {
+  if (Date.now() - floatCache.checkedAt < FLOAT_CACHE_MS) return floatCache.amount;
+  try {
+    const { amount } = await getFloatBalance();
+    floatCache = { amount, checkedAt: Date.now() };
+    return amount;
+  } catch {
+    return floatCache.amount;
+  }
+}
+
 router.post('/', async (req, res) => {
+  const settings = await getSettings();
+
+  if (!settings.service_enabled) {
+    return res.status(503).json({
+      error: 'Sorry, airtime purchases are temporarily unavailable. Please try again shortly.',
+    });
+  }
+
+  if (settings.min_float_threshold > 0) {
+    const floatAmount = await cachedFloatAmount();
+    if (floatAmount !== null && floatAmount < settings.min_float_threshold) {
+      console.warn(`Blocking sale — float ${floatAmount} below threshold ${settings.min_float_threshold}`);
+      return res.status(503).json({
+        error: 'Sorry, airtime purchases are temporarily unavailable. Please try again shortly.',
+      });
+    }
+  }
+
   const { payerPhone, recipientPhone, faceValue, offerId } = req.body || {};
 
   if (!payerPhone || !PHONE_RE.test(String(payerPhone).replace(/\s/g, ''))) {
@@ -21,7 +55,7 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Enter a valid airtime amount (minimum Ksh 5)' });
   }
 
-  const amountToCharge = priceForFaceValue(value, 5);
+  const amountToCharge = priceForFaceValue(value, settings.discount_percent);
 
   try {
     const stk = await initiateStkPush({
