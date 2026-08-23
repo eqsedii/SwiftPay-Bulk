@@ -86,6 +86,11 @@ body {
 }
 .form-card h1 { color: var(--green); font-size: 28px; margin: 0 0 24px; }
 .form-card label { display: block; font-weight: 700; margin: 18px 0 8px; font-size: 15px; }
+.form-card h2 { color: var(--green); font-size: 20px; margin: 28px 0 10px; }
+.form-card p, .form-card li { font-size: 15px; line-height: 1.6; color: var(--text); }
+.form-card ol, .form-card ul { padding-left: 20px; }
+.form-card .updated { font-size: 13px; color: #6b7a70; margin-bottom: 20px; }
+
 .input-wrap {
   display: flex;
   align-items: center;
@@ -112,18 +117,7 @@ body {
 }
 .checkbox-row a { color: var(--green); font-weight: 700; }
 
-.recaptcha-box {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 400px;
-  margin: 8px 0 20px;
-}
-.recaptcha-box .checkbox-row { margin: 0; }
-.recaptcha-badge { text-align: right; font-size: 11px; color: #999; line-height: 1.4; }
+.recaptcha-wrap { margin: 8px 0 20px; }
 
 .form-message { min-height: 20px; font-size: 14px; font-weight: 600; color: var(--red); margin-bottom: 10px; }
 
@@ -141,6 +135,11 @@ body {
 }
 .pay-btn:hover:not(:disabled) { background: var(--green-bright); }
 .pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* FAQ accordion */
+.faq-item { border-bottom: 1px solid var(--border); padding: 14px 0; }
+.faq-item summary { font-weight: 700; cursor: pointer; font-size: 15px; }
+.faq-item p { margin: 10px 0 0; }
 
 .footer {
   background: var(--green-dark);
