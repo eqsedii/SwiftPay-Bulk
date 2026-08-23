@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light only" />
+<title>Admin Dashboard — Swift Pay Bulk Airtime</title>
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <header class="admin-nav">
+    <div class="admin-nav-inner">
+      <div class="admin-logo">Swift Pay Bulk Airtime — Admin</div>
+      <button id="logout-btn" class="logout-btn">Log Out</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <section class="card-grid">
+      <div class="stat-card">
+        <div class="stat-label">Africa's Talking Float</div>
+        <div id="float-amount" class="stat-value">…</div>
+        <div id="float-warning" class="stat-warning"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Revenue (successful sales)</div>
+        <div id="revenue-amount" class="stat-value">…</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Cost (airtime disbursed)</div>
+        <div id="cost-amount" class="stat-value">…</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Profit</div>
+        <div id="profit-amount" class="stat-value">…</div>
+      </div>
+    </section>
+
+    <section class="card-grid small">
+      <div class="mini-stat"><span id="count-success">…</span><small>Successful</small></div>
+      <div class="mini-stat warn"><span id="count-paid-failed">…</span><small>Paid, airtime failed</small></div>
+      <div class="mini-stat"><span id="count-failed">…</span><small>Payment failed</small></div>
+      <div class="mini-stat"><span id="count-pending">…</span><small>Pending</small></div>
+    </section>
+
+    <section class="panel">
+      <h2>Service Controls</h2>
+      <div class="control-row">
+        <label class="switch-row">
+          <input type="checkbox" id="service-toggle" />
+          <span>Customer purchases enabled</span>
+        </label>
+      </div>
+      <div class="control-row">
+        <label for="discount-input">Discount percentage (0–15%, shown to customers as "up to 15%")</label>
+        <div class="inline-input">
+          <input type="number" id="discount-input" min="0" max="15" step="0.5" />
+          <button id="save-discount-btn">Save</button>
+        </div>
+      </div>
+      <div id="settings-message" class="settings-message"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Transaction History</h2>
+      <div class="table-wrap">
+        <table id="txn-table">
+          <thead>
+            <tr>
+              <th>Date/Time</th>
+              <th>Payer (M-Pesa)</th>
+              <th>Recipient</th>
+              <th>Amount Charged</th>
+              <th>Airtime Value</th>
+              <th>M-Pesa</th>
+              <th>Airtime</th>
+              <th>Receipt</th>
+            </tr>
+          </thead>
+          <tbody id="txn-tbody">
+            <tr><td colspan="8">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button id="load-more-btn" class="load-more-btn">Load more</button>
+    </section>
+
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>
