@@ -3,7 +3,7 @@ const { pool } = require('../db');
 const { initiateStkPush } = require('../services/mpesa');
 const { getFloatBalance } = require('../services/airtime');
 const { getSettings } = require('../services/settings');
-const { priceForFaceValue } = require('./offers');
+const { priceForFaceValue, MIN_AMOUNT, MAX_AMOUNT } = require('./offers');
 
 const router = express.Router();
 
@@ -51,8 +51,8 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Enter a valid recipient number' });
   }
   const value = Number(faceValue);
-  if (!Number.isFinite(value) || value < 5) {
-    return res.status(400).json({ error: 'Enter a valid airtime amount (minimum Ksh 5)' });
+  if (!Number.isFinite(value) || value < MIN_AMOUNT || value > MAX_AMOUNT) {
+    return res.status(400).json({ error: `Enter an amount between Ksh ${MIN_AMOUNT} and Ksh ${MAX_AMOUNT}` });
   }
 
   const amountToCharge = priceForFaceValue(value, settings.discount_percent);
