@@ -80,6 +80,7 @@ if (onDashboardPage) {
     const data = await res.json();
     document.getElementById('service-toggle').checked = data.service_enabled;
     document.getElementById('discount-input').value = data.discount_percent;
+    document.getElementById('float-threshold-input').value = data.min_float_threshold;
   }
 
   function statusBadge(text, kind) {
@@ -173,6 +174,27 @@ if (onDashboardPage) {
     }
   });
 
+  document.getElementById('save-threshold-btn').addEventListener('click', async () => {
+    const msgEl = document.getElementById('settings-message');
+    const value = Number(document.getElementById('float-threshold-input').value);
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ minFloatThreshold: value }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      msgEl.style.color = '#1a8c3f';
+      msgEl.textContent = value > 0
+        ? `Purchases will now auto-block if float drops below Ksh ${value}.`
+        : 'Float auto-block disabled (set to 0).';
+    } catch (err) {
+      msgEl.style.color = '#d21e1e';
+      msgEl.textContent = err.message || 'Could not update float threshold.';
+    }
+  });
+
   document.getElementById('load-more-btn').addEventListener('click', () => loadTransactions(false));
 
   (async () => {
@@ -182,4 +204,4 @@ if (onDashboardPage) {
     loadSettings();
     loadTransactions(true);
   })();
-        }
+}
