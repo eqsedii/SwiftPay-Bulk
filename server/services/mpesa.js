@@ -7,6 +7,7 @@ const {
   MPESA_TILL_NUMBER,
   MPESA_PASSKEY,
   MPESA_CALLBACK_URL,
+  MPESA_TRANSACTION_TYPE = 'CustomerBuyGoodsOnline',
 } = process.env;
 
 const BASE_URL =
@@ -66,7 +67,7 @@ async function initiateStkPush({ payerPhone, amount, accountReference, descripti
     BusinessShortCode: shortcode,
     Password: password,
     Timestamp: timestamp,
-    TransactionType: 'CustomerBuyGoodsOnline',
+    TransactionType: MPESA_TRANSACTION_TYPE,
     Amount: amount,
     PartyA: msisdn,
     PartyB: shortcode,
