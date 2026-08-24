@@ -77,7 +77,7 @@ router.get('/settings', async (req, res) => {
 });
 
 router.put('/settings', async (req, res) => {
-  const { discountPercent, serviceEnabled } = req.body || {};
+  const { discountPercent, serviceEnabled, minFloatThreshold } = req.body || {};
 
   if (
     discountPercent !== undefined &&
@@ -88,9 +88,15 @@ router.put('/settings', async (req, res) => {
   if (serviceEnabled !== undefined && typeof serviceEnabled !== 'boolean') {
     return res.status(400).json({ error: 'serviceEnabled must be true or false' });
   }
+  if (
+    minFloatThreshold !== undefined &&
+    (typeof minFloatThreshold !== 'number' || minFloatThreshold < 0)
+  ) {
+    return res.status(400).json({ error: 'Minimum float must be a number 0 or greater' });
+  }
 
   try {
-    const updated = await updateSettings({ discountPercent, serviceEnabled });
+    const updated = await updateSettings({ discountPercent, serviceEnabled, minFloatThreshold });
     res.json(updated);
   } catch (err) {
     console.error('Settings update failed', err);
