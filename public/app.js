@@ -10,12 +10,15 @@ const modalText = document.getElementById('modal-text');
 const modalSpinner = document.getElementById('modal-spinner');
 const modalClose = document.getElementById('modal-close');
 
+const MIN_AMOUNT = 20;
+const MAX_AMOUNT = 10000;
+
 let quoteTimer = null;
 
 amountInput.addEventListener('input', () => {
   clearTimeout(quoteTimer);
   const value = Number(amountInput.value);
-  if (!value || value < 5) {
+  if (!value || value < MIN_AMOUNT || value > MAX_AMOUNT) {
     quoteEl.textContent = '';
     return;
   }
@@ -65,6 +68,11 @@ form.addEventListener('submit', async (e) => {
   const payerPhone = document.getElementById('payerPhone').value.trim();
   const recipientPhone = document.getElementById('recipientPhone').value.trim();
   const faceValue = Number(amountInput.value);
+
+  if (!faceValue || faceValue < MIN_AMOUNT || faceValue > MAX_AMOUNT) {
+    messageEl.textContent = `Enter an amount between Ksh ${MIN_AMOUNT} and Ksh ${MAX_AMOUNT}.`;
+    return;
+  }
 
   if (!document.getElementById('terms').checked) {
     messageEl.textContent = 'Please agree to the terms and conditions.';
