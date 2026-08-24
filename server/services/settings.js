@@ -15,30 +15,20 @@ async function getSettings({ fresh = false } = {}) {
   return cache;
 }
 
-async function updateSettings({ discountPercent, serviceEnabled }) {
+async function updateSettings({ discountPercent, serviceEnabled, minFloatThreshold }) {
   const { rows } = await pool.query(
     `UPDATE settings
         SET discount_percent = COALESCE($1, discount_percent),
             service_enabled  = COALESCE($2, service_enabled),
+            min_float_threshold = COALESCE($3, min_float_threshold),
             updated_at = now()
       WHERE id = 1
       RETURNING discount_percent, service_enabled, min_float_threshold`,
-    [discountPercent ?? null, serviceEnabled ?? null]
+    [discountPercent ?? null, serviceEnabled ?? null, minFloatThreshold ?? null]
   );
   cache = rows[0];
   cacheTime = Date.now();
   return cache;
 }
 
-async function updateMinFloatThreshold(minFloatThreshold) {
-  const { rows } = await pool.query(
-    `UPDATE settings SET min_float_threshold = $1, updated_at = now()
-      WHERE id = 1 RETURNING discount_percent, service_enabled, min_float_threshold`,
-    [minFloatThreshold]
-  );
-  cache = rows[0];
-  cacheTime = Date.now();
-  return cache;
-}
-
-module.exports = { getSettings, updateSettings, updateMinFloatThreshold };
+module.exports = { getSettings, updateSettings };
