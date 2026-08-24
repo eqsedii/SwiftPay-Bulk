@@ -4,6 +4,9 @@ const { getSettings } = require('../services/settings');
 
 const router = express.Router();
 
+const MIN_AMOUNT = 20;
+const MAX_AMOUNT = 10000;
+
 function priceForFaceValue(faceValue, discountPercent) {
   return Math.round(faceValue * (1 - discountPercent / 100));
 }
@@ -28,8 +31,8 @@ router.get('/', async (req, res) => {
 
 router.get('/quote', async (req, res) => {
   const faceValue = Number(req.query.amount);
-  if (!Number.isFinite(faceValue) || faceValue < 5) {
-    return res.status(400).json({ error: 'Enter a valid amount (minimum Ksh 5)' });
+  if (!Number.isFinite(faceValue) || faceValue < MIN_AMOUNT || faceValue > MAX_AMOUNT) {
+    return res.status(400).json({ error: `Enter an amount between Ksh ${MIN_AMOUNT} and Ksh ${MAX_AMOUNT}` });
   }
   try {
     const settings = await getSettings();
@@ -40,4 +43,4 @@ router.get('/quote', async (req, res) => {
   }
 });
 
-module.exports = { router, priceForFaceValue };
+module.exports = { router, priceForFaceValue, MIN_AMOUNT, MAX_AMOUNT };
